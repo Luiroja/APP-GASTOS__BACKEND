@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 
 const gastoSchema = mongoose.Schema ({
+    user : {
+        type : mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     text : {
         type : String,
-        require: [true, 'Por favor escribe un texto']
+        required: [true, 'Por favor escribe un texto']
     },
     cantidad : {
         type : Number,
-        require: [true, 'Por favor escribe una cantidad']
+        required: [true, 'Por favor escribe una cantidad']
     }
 
 }, {
