@@ -59,24 +59,40 @@ const loginUser = asyncHandler(async(req, res) => {
         res.status (200).json ({
             id: user.id, 
             name: user.name,
-            email: user.email
+            email: user.email,
+            token: generateToken (user.id)
         })
     } else {
         res.status (400) 
         throw new Error ('Credenciales incorrectas')
     }
-    res.json({message: 'Logear Usuario'})
+    
 })
 
 
 const perfilUser = asyncHandler(async(req, res) => {
-    res.json({message: 'Mostrar perfil del Usuario'})
+
+     const { id, name, email } = req.user
+    
+     res.status(200).json({
+        id,
+        name,
+        email
+    })
+    
 })
 
+
+// generamos el Token 
+const generateToken = (id) => {
+    return jwt.sign ({ id }, process.env.JWT_SECRET, {
+        expiresIn: '30d',
+    })
+}
 
 
 module.exports = {
     registerUser,
     loginUser,
-    perfilUser
+    perfilUser,
 }

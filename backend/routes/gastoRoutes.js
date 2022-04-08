@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const {getGastos, postGastos, putGastos, deleteGastos} = require('../controllers/gastoControllers')
-
-router.route('/').get(getGastos).post(postGastos);
-router.route('/:id').put(putGastos).delete(deleteGastos);
+const {protect} = require('../middleware/authMiddleware');
 
 
-module.exports = router;
+router.route('/').get(protect, getGastos).post(protect, postGastos);
+router.route('/:id').put(protect, putGastos).delete(protect, deleteGastos);
+
+
+module.exports = router; 
